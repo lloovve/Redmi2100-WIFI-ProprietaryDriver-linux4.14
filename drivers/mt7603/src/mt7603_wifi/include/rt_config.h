@@ -33,7 +33,7 @@
 
 
 #include "rtmp_comm.h"
-
+#include <linux/sched/signal.h>
 #include "rtmp_def.h"
 #include "rtmp_chip.h"
 #include "rtmp_timer.h"

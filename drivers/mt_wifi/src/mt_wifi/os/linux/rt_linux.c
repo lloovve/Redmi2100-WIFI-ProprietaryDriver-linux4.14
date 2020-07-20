@@ -44,6 +44,7 @@
 #include <net/sch_generic.h>
 #include "rt_os_net.h"
 #include "rt_config.h"
+#include <linux/slab.h>
 #ifdef MEM_ALLOC_INFO_SUPPORT
 #include "meminfo_list.h"
 #endif /* MEM_ALLOC_INFO_SUPPORT */
@@ -68,6 +69,9 @@
 #define RT_CONFIG_IF_OPMODE_ON_STA(__OpMode)
 #endif
 
+
+#define __vfs_read(a,b,c,d) kernel_read(a,b,c,d)
+#define __vfs_write(a,b,c,d) kernel_write(a,b,c,d)
 
 #if (KERNEL_VERSION(2, 6, 0) <= LINUX_VERSION_CODE)
 #if (KERNEL_VERSION(2, 6, 3) > LINUX_VERSION_CODE)
@@ -1955,7 +1959,7 @@ VOID RtmpDrvAllMacPrint(
 			kernel_write(file_w, msg, strlen(msg), &file_w->f_pos);
 
 #else
-			__vfs_write(file_w, msg, strlen(msg), &file_w->f_pos);
+			kernel_write(file_w, msg, strlen(msg), &file_w->f_pos);
 #endif
 #endif
 				MTWF_LOG(DBG_CAT_INIT, DBG_SUBCAT_ALL, DBG_LVL_ERROR, ("%s", msg));
@@ -2020,7 +2024,7 @@ VOID RtmpDrvAllE2PPrint(
 				kernel_write(file_w, msg, strlen(msg), &file_w->f_pos);
 
 #else
-				__vfs_write(file_w, msg, strlen(msg), &file_w->f_pos);
+				kernel_write(file_w, msg, strlen(msg), &file_w->f_pos);
 #endif
 #endif
 				MTWF_LOG(DBG_CAT_INIT, DBG_SUBCAT_ALL, DBG_LVL_ERROR, ("%s", msg));
@@ -2073,7 +2077,7 @@ VOID RtmpDrvAllRFPrint(
 			kernel_write(file_w, pBuf, BufLen, &file_w->f_pos);
 
 #else
-			__vfs_write(file_w, pBuf, BufLen, &file_w->f_pos);
+			kernel_write(file_w, pBuf, BufLen, &file_w->f_pos);
 #endif
 #endif
 		}

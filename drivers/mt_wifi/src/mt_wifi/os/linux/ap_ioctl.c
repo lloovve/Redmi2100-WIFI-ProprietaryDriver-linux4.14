@@ -398,7 +398,7 @@ INT rt28xx_ap_ioctl(struct net_device *net_dev, struct ifreq *rq, int cmd)
 
 	case SIOCGIWPRIV:
 		if (wrqin->u.data.pointer) {
-			if (access_ok(wrqin->u.data.pointer, sizeof(ap_privtab)) != TRUE)
+			if (access_ok(VERIFY_READ, wrqin->u.data.pointer, sizeof(ap_privtab)) != TRUE)
 				break;
 
 			if ((sizeof(ap_privtab) / sizeof(ap_privtab[0])) <= wrq->u.data.length) {
@@ -413,13 +413,13 @@ INT rt28xx_ap_ioctl(struct net_device *net_dev, struct ifreq *rq, int cmd)
 		break;
 
 	case RTPRIV_IOCTL_SET: {
-		if(access_ok(wrqin->u.data.pointer, wrqin->u.data.length) == TRUE)
+		if(access_ok(VERIFY_READ, wrqin->u.data.pointer, wrqin->u.data.length) == TRUE)
 			Status = RTMP_AP_IoctlHandle(pAd, wrq, CMD_RTPRIV_IOCTL_SET, 0, NULL, 0);
 	}
 	break;
 
 	case RTPRIV_IOCTL_SHOW: {
-		if(access_ok(wrqin->u.data.pointer, wrqin->u.data.length) == TRUE)
+		if(access_ok(VERIFY_READ, wrqin->u.data.pointer, wrqin->u.data.length) == TRUE)
 			Status = RTMP_AP_IoctlHandle(pAd, wrq, CMD_RTPRIV_IOCTL_SHOW, 0, NULL, 0);
 	}
 	break;

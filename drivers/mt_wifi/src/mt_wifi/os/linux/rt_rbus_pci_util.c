@@ -21,6 +21,8 @@
 
 #ifdef RTMP_MAC_PCI
 VOID *alloc_rx_buf_1k(void *hif_resource);
+
+#if 0
 static inline void *dma_zalloc_coherent(struct device *dev, size_t size, dma_addr_t *dma_handle, gfp_t flag)
 
 {
@@ -34,6 +36,8 @@ static inline void *dma_zalloc_coherent(struct device *dev, size_t size, dma_add
       return ret;
 
 }
+
+#endif
 /* Function for Tx/Rx/Mgmt Desc Memory allocation. */
 void RtmpAllocDescBuf(
 	IN VOID * pDev,
